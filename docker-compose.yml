@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mysqldb:
+    image: mysql:8
+    networks:
+      - employee-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=bootdb
+      - MYSQL_PASSWORD=password
+  employee-jdbc:
+    image: employee-jdbc
+    ports:
+      - "8080:8080"
+    networks:
+      - employee-mysql
+    depends_on:
+      - mysqldb
+    links:
+      - mysqldb
+
+networks:
+  employee-mysql:
