@@ -8,16 +8,17 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_DATABASE=bootdb
       - MYSQL_PASSWORD=password
+
   employee-jdbc:
     image: employee-jdbc
     ports:
       - "8080:8080"
     networks:
       - employee-mysql
+    environment:
+          SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb/bootdb?createDatabaseIfNotExist=true&autoReconnect=true&allowPublicKeyRetrieval=true&useSSL=false
     depends_on:
-      - mysqldb
-    links:
-      - mysqldb
+      - "mysqldb"
 
 networks:
   employee-mysql:
